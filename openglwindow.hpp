@@ -40,12 +40,12 @@ private:
 	float m_truckSpeed{0.0f};
 	float m_panSpeed  {0.0f};
 	float m_tiltSpeed {0.0f};
-	static const int arbustosN = 100;
-	float arbustosPositionX[arbustosN];
-	float arbustosPositionY[arbustosN];
-	float arbustosColorRed[arbustosN];
-	float arbustosColorGreen[arbustosN];
-	float arbustosSize[arbustosN];
+	static const int bushN = 100;
+	float bushPositionX[bushN];
+	float bushPositionY[bushN];
+	float bushColorRed[bushN];
+	float bushColorGreen[bushN];
+	float bushSize[bushN];
 
 	Ground m_ground;
 

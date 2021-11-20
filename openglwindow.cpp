@@ -114,12 +114,12 @@ void OpenGLWindow::initializeGL() {
   	m_randomEngine.seed(seed);
 	std::uniform_int_distribution<int> intDistribution(1, 10);
 
-	for(int i = 0; i < arbustosN; i++){		
-		arbustosPositionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		arbustosPositionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		arbustosColorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
-		arbustosColorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
-		arbustosSize[i] = float(intDistribution(m_randomEngine)) * 0.001f;
+	for(int i = 0; i < bushN; i++){		
+		bushPositionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		bushPositionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		bushColorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
+		bushColorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
+		bushSize[i] = float(intDistribution(m_randomEngine)) * 0.001f;
 	}
 
 	resizeGL(getWindowSettings().width, getWindowSettings().height);
@@ -208,15 +208,15 @@ void OpenGLWindow::paintGL() {
 
 
 
-	for(int i = 0; i < arbustosN; i++){
+	for(int i = 0; i < bushN; i++){
 		glm::mat4 model{1.0f};
 		{
-			model = glm::translate(model, glm::vec3(arbustosPositionX[i], 0.0f, arbustosPositionY[i]));
-			model = glm::rotate   (model, glm::radians(arbustosPositionY[i] * 9.0f), glm::vec3(0,1,0));
-			model = glm::scale    (model, glm::vec3(arbustosSize[i]));
+			model = glm::translate(model, glm::vec3(bushPositionX[i], 0.0f, bushPositionY[i]));
+			model = glm::rotate   (model, glm::radians(bushPositionY[i] * 9.0f), glm::vec3(0,1,0));
+			model = glm::scale    (model, glm::vec3(bushSize[i]));
 
 			abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-			abcg::glUniform4f(colorLoc, arbustosColorRed[i], arbustosColorGreen[i], 0.0f, 1.0f);
+			abcg::glUniform4f(colorLoc, bushColorRed[i], bushColorGreen[i], 0.0f, 1.0f);
 			abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 		}
 
