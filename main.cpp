@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
 		window->setWindowSettings({
 			.width = 600,
 			.height = 600,
-			.title = "LookAt Camera"
+			.title = "Garden"
 		});
 		app.run(std::move(window));
 	}
