@@ -13,6 +13,18 @@ struct Vertex {
 	bool operator==(const Vertex& other) const { return position == other.position; }
 };
 
+class Objects3d {
+	public: 
+		static const int nObjects = 100;
+		bool positionXOut[nObjects];
+		bool positionYOut[nObjects];
+		float positionX[nObjects];
+		float positionY[nObjects];
+		float colorRed[nObjects];
+		float colorGreen[nObjects];
+		float size[nObjects];
+};
+
 class OpenGLWindow : public abcg::OpenGLWindow {
 protected:
 	void handleEvent(SDL_Event& ev) override;
@@ -40,14 +52,9 @@ private:
 	float m_truckSpeed{0.0f};
 	float m_panSpeed  {0.0f};
 	float m_tiltSpeed {0.0f};
-	static const int bushN = 200;
-	bool bushPositionXOut[bushN];
-	bool bushPositionYOut[bushN];
-	float bushPositionX[bushN];
-	float bushPositionY[bushN];
-	float bushColorRed[bushN];
-	float bushColorGreen[bushN];
-	float bushSize[bushN];
+
+	Objects3d bush;
+	Objects3d three_1;
 
 	Ground m_ground;
 

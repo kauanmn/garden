@@ -114,14 +114,14 @@ void OpenGLWindow::initializeGL() {
   	m_randomEngine.seed(seed);
 	std::uniform_int_distribution<int> intDistribution(1, 10);
 
-	for(int i = 0; i < bushN; i++){		
-		bushPositionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		bushPositionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		bushColorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
-		bushColorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
-		bushSize[i] = float(intDistribution(m_randomEngine)) * 0.001f;
-		bushPositionXOut[i] = intDistribution(m_randomEngine) > 5;
-		bushPositionYOut[i] = intDistribution(m_randomEngine) > 5;
+	for(int i = 0; i < bush.nObjects; i++){		
+		bush.positionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		bush.positionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		bush.colorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
+		bush.colorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
+		bush.size[i] = float(intDistribution(m_randomEngine)) * 0.001f;
+		bush.positionXOut[i] = intDistribution(m_randomEngine) > 5;
+		bush.positionYOut[i] = intDistribution(m_randomEngine) > 5;
 	}
 
 	resizeGL(getWindowSettings().width, getWindowSettings().height);
@@ -210,21 +210,19 @@ void OpenGLWindow::paintGL() {
 
 
 
-	for(int i = 0; i < bushN; i++){
+	for(int i = 0; i < bush.nObjects; i++){
 		glm::mat4 model{1.0f};
 		{
-			float positionX =  bushPositionXOut[i] ? -bushPositionX[i] : bushPositionX[i];
-			float positionY =  bushPositionYOut[i] ? -bushPositionY[i] : bushPositionY[i];
+			float positionX =  bush.positionXOut[i] ? -bush.positionX[i] : bush.positionX[i];
+			float positionY =  bush.positionYOut[i] ? -bush.positionY[i] : bush.positionY[i];
 			model = glm::translate(model, glm::vec3(positionX, 0.0f, positionY));
-			model = glm::rotate   (model, glm::radians(bushPositionY[i] * 9.0f), glm::vec3(0,1,0));
-			model = glm::scale    (model, glm::vec3(bushSize[i]));
+			model = glm::rotate   (model, glm::radians(bush.positionY[i] * 9.0f), glm::vec3(0,1,0));
+			model = glm::scale    (model, glm::vec3(bush.size[i]));
 
 			abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-			abcg::glUniform4f(colorLoc, bushColorRed[i], bushColorGreen[i], 0.0f, 1.0f);
+			abcg::glUniform4f(colorLoc, bush.colorRed[i], bush.colorGreen[i], 0.0f, 1.0f);
 			abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-		}
-
-		
+		}	
 	}
 
 	abcg::glBindVertexArray(0);
