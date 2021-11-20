@@ -120,6 +120,8 @@ void OpenGLWindow::initializeGL() {
 		bushColorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
 		bushColorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
 		bushSize[i] = float(intDistribution(m_randomEngine)) * 0.001f;
+		bushPositionXOut[i] = intDistribution(m_randomEngine) > 5;
+		bushPositionYOut[i] = intDistribution(m_randomEngine) > 5;
 	}
 
 	resizeGL(getWindowSettings().width, getWindowSettings().height);
@@ -211,7 +213,9 @@ void OpenGLWindow::paintGL() {
 	for(int i = 0; i < bushN; i++){
 		glm::mat4 model{1.0f};
 		{
-			model = glm::translate(model, glm::vec3(bushPositionX[i], 0.0f, bushPositionY[i]));
+			float positionX =  bushPositionXOut[i] ? -bushPositionX[i] : bushPositionX[i];
+			float positionY =  bushPositionYOut[i] ? -bushPositionY[i] : bushPositionY[i];
+			model = glm::translate(model, glm::vec3(positionX, 0.0f, positionY));
 			model = glm::rotate   (model, glm::radians(bushPositionY[i] * 9.0f), glm::vec3(0,1,0));
 			model = glm::scale    (model, glm::vec3(bushSize[i]));
 

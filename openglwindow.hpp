@@ -40,7 +40,9 @@ private:
 	float m_truckSpeed{0.0f};
 	float m_panSpeed  {0.0f};
 	float m_tiltSpeed {0.0f};
-	static const int bushN = 100;
+	static const int bushN = 200;
+	bool bushPositionXOut[bushN];
+	bool bushPositionYOut[bushN];
 	float bushPositionX[bushN];
 	float bushPositionY[bushN];
 	float bushColorRed[bushN];
