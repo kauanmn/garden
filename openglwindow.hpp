@@ -5,6 +5,7 @@
 #include "abcg.hpp"
 #include "camera.hpp"
 #include "ground.hpp"
+#include <random>
 
 struct Vertex {
 	glm::vec3 position;
@@ -21,11 +22,15 @@ protected:
 	void resizeGL(int width, int height) override;
 	void terminateGL() override;
 
+public: 
+	
 private:
 	GLuint m_VAO{};
 	GLuint m_VBO{};
 	GLuint m_EBO{};
 	GLuint m_program{};
+
+	std::default_random_engine m_randomEngine;
 
 	int m_viewportWidth{};
 	int m_viewportHeight{};
@@ -35,6 +40,12 @@ private:
 	float m_truckSpeed{0.0f};
 	float m_panSpeed  {0.0f};
 	float m_tiltSpeed {0.0f};
+	static const int arbustosN = 100;
+	float arbustosPositionX[arbustosN];
+	float arbustosPositionY[arbustosN];
+	float arbustosColorRed[arbustosN];
+	float arbustosColorGreen[arbustosN];
+	float arbustosSize[arbustosN];
 
 	Ground m_ground;
 

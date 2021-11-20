@@ -109,6 +109,19 @@ void OpenGLWindow::initializeGL() {
 	// end of binding to current VAO
 	abcg::glBindVertexArray(0);
 
+
+	auto seed{std::chrono::steady_clock::now().time_since_epoch().count()};
+  	m_randomEngine.seed(seed);
+	std::uniform_int_distribution<int> intDistribution(1, 10);
+
+	for(int i = 0; i < arbustosN; i++){		
+		arbustosPositionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		arbustosPositionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		arbustosColorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
+		arbustosColorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
+		arbustosSize[i] = float(intDistribution(m_randomEngine)) * 0.001f;
+	}
+
 	resizeGL(getWindowSettings().width, getWindowSettings().height);
 }
 
@@ -192,50 +205,22 @@ void OpenGLWindow::paintGL() {
 
 
 	abcg::glBindVertexArray(m_VAO);
-	glm::mat4 model{1.0f};
 
-	// arbusto 
-	{
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
-		model = glm::rotate   (model, glm::radians(90.0f), glm::vec3(0,1,0));
-		model = glm::scale    (model, glm::vec3(0.5f));
 
-		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 0.0f, 0.9f, 0.0f, 1.0f);
-		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-	}
 
-		// arbusto 
-	{
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
-		model = glm::scale(model, glm::vec3(0.5f));
+	for(int i = 0; i < arbustosN; i++){
+		glm::mat4 model{1.0f};
+		{
+			model = glm::translate(model, glm::vec3(arbustosPositionX[i], 0.0f, arbustosPositionY[i]));
+			model = glm::rotate   (model, glm::radians(arbustosPositionY[i] * 9.0f), glm::vec3(0,1,0));
+			model = glm::scale    (model, glm::vec3(arbustosSize[i]));
 
-		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f);
-		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-	}
+			abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
+			abcg::glUniform4f(colorLoc, arbustosColorRed[i], arbustosColorGreen[i], 0.0f, 1.0f);
+			abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
+		}
 
-		// arbusto 
-	{
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate   (model, glm::radians(-90.0f), glm::vec3(0,1,0));
-		model = glm::scale    (model, glm::vec3(0.5f));
-
-		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 0.0f, 0.6f, 0.0f, 1.0f);
-		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
-	}
-
-		// arbusto 
-	{
-		model = glm::mat4(1.0);
-		model = glm::scale(model, glm::vec3(0.1f));
-
-		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 0.0f, 0.8f, 0.25f, 1.0f);
-		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
+		
 	}
 
 	abcg::glBindVertexArray(0);
