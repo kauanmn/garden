@@ -73,7 +73,7 @@ void OpenGLWindow::initializeGL() {
 
 
 	// load model
-	loadModelFromFile(getAssetsPath() + "bunny.obj");
+	loadModelFromFile(getAssetsPath() + "arbusto.obj");
 
 	// generate VBO
 	abcg::glGenBuffers(1, &m_VBO);
@@ -194,29 +194,29 @@ void OpenGLWindow::paintGL() {
 	abcg::glBindVertexArray(m_VAO);
 	glm::mat4 model{1.0f};
 
-	// draw white bunny
+	// arbusto 
 	{
 		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, 0.0f));
 		model = glm::rotate   (model, glm::radians(90.0f), glm::vec3(0,1,0));
 		model = glm::scale    (model, glm::vec3(0.5f));
 
 		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 1.0f, 1.0f, 1.0f, 1.0f);
+		abcg::glUniform4f(colorLoc, 0.0f, 0.9f, 0.0f, 1.0f);
 		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	// draw yellow bunny
+		// arbusto 
 	{
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -1.0f));
 		model = glm::scale(model, glm::vec3(0.5f));
 
 		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 1.0f, 0.8f, 0.0f, 1.0f);
+		abcg::glUniform4f(colorLoc, 0.0f, 1.0f, 0.0f, 1.0f);
 		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	// draw blue bunny
+		// arbusto 
 	{
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -224,17 +224,17 @@ void OpenGLWindow::paintGL() {
 		model = glm::scale    (model, glm::vec3(0.5f));
 
 		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 0.0f, 0.8f, 1.0f, 1.0f);
+		abcg::glUniform4f(colorLoc, 0.0f, 0.6f, 0.0f, 1.0f);
 		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 	}
 
-	// draw red bunny
+		// arbusto 
 	{
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(0.1f));
 
 		abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-		abcg::glUniform4f(colorLoc, 1.0f, 0.25f, 0.25f, 1.0f);
+		abcg::glUniform4f(colorLoc, 0.0f, 0.8f, 0.25f, 1.0f);
 		abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 	}
 

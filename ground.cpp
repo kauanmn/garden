@@ -35,7 +35,7 @@ void Ground::initializeGL(GLuint program) {
 
 void Ground::paintGL() {
 	// Draw a grid of tiles centered on the xz plane
-	const int N{5};
+	const int N{100};
 
 	abcg::glBindVertexArray(m_VAO);
 	for (const auto z : iter::range(-N, N+1)) {
@@ -45,9 +45,8 @@ void Ground::paintGL() {
 			model = glm::translate(model, glm::vec3(x, 0.0f, z));
 			abcg::glUniformMatrix4fv(m_modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
 
-			// set color (checkerboard pattern)
-			const float gray{(z+x) % 2 == 0 ? 1.0f : 0.5f};
-			abcg::glUniform4f(m_colorLoc, gray, gray, gray, 1.0f);
+			// cor terreno
+			abcg::glUniform4f(m_colorLoc, 0.2f, 1.0f, 0.0f, 1.0f);
 
 			abcg::glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 		}
