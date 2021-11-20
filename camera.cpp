@@ -59,9 +59,13 @@ void Camera::pan(float speed) {
 void Camera::tilt(float speed) {
 	glm::mat4 transform{glm::mat4(1.0f)};
 
+	const glm::vec3 forward   {glm::normalize(m_at - m_eye)};
+	const glm::vec3 forward_xz{forward.x, 0.0f, forward.z};
+	const glm::vec3 crossVec  {glm::cross(forward_xz, glm::vec3{0.0f, 1.0f, 0.0f})};
+
 	// rotate camera around its local y axis
 	transform = glm::translate(transform, m_eye);
-	transform = glm::rotate(transform, -speed, glm::vec3(1.0f, 0.0f, 0.0f));
+	transform = glm::rotate(transform, speed, crossVec);
 	transform = glm::translate(transform, -m_eye);
 
 	m_at = transform * glm::vec4(m_at, 1.0f);
