@@ -22,8 +22,8 @@ namespace std {
 
 void OpenGLWindow::handleEvent(SDL_Event& ev) {
 	if (ev.type == SDL_KEYDOWN) {
-		if (ev.key.keysym.sym == SDLK_UP)    m_tiltSpeed =  1.0f;
-		if (ev.key.keysym.sym == SDLK_DOWN)  m_tiltSpeed = -1.0f;
+		if (ev.key.keysym.sym == SDLK_UP)    m_tiltSpeed = -1.0f;
+		if (ev.key.keysym.sym == SDLK_DOWN)  m_tiltSpeed =  1.0f;
 		if (ev.key.keysym.sym == SDLK_LEFT)  m_panSpeed  = -1.0f;
 		if (ev.key.keysym.sym == SDLK_RIGHT) m_panSpeed  =  1.0f;
 
