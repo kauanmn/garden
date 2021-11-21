@@ -47,7 +47,7 @@ void Camera::tilt(float speed) {
 
 	// rotate camera around its local y axis
 	transform = glm::translate(transform, m_eye);
-	transform = glm::rotate(transform, speed, crossVec);
+	transform = glm::rotate(transform, -speed, crossVec);
 	transform = glm::translate(transform, -m_eye);
 
 	m_at = transform * glm::vec4(m_at, 1.0f);
@@ -115,8 +115,8 @@ for (const auto z : iter::range(-N, N+1)) {
 As respostas aos eventos dos dispositivos de entrada continuam sendo feitas na função `OpenGLWindow::handleEvent(SDL_Event& ev)`. Foi feito um remapeamento das teclas com o seguinte trecho:
 ``` C++
 if (ev.type == SDL_KEYDOWN) {
-	if (ev.key.keysym.sym == SDLK_UP)    m_tiltSpeed =  1.0f;
-	if (ev.key.keysym.sym == SDLK_DOWN)  m_tiltSpeed = -1.0f;
+	if (ev.key.keysym.sym == SDLK_UP)    m_tiltSpeed = -1.0f;
+	if (ev.key.keysym.sym == SDLK_DOWN)  m_tiltSpeed =  1.0f;
 	if (ev.key.keysym.sym == SDLK_LEFT)  m_panSpeed  = -1.0f;
 	if (ev.key.keysym.sym == SDLK_RIGHT) m_panSpeed  =  1.0f;
 
