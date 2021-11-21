@@ -65,7 +65,7 @@ void Camera::tilt(float speed) {
 
 	// rotate camera around its local y axis
 	transform = glm::translate(transform, m_eye);
-	transform = glm::rotate(transform, speed, crossVec);
+	transform = glm::rotate(transform, -speed, crossVec);
 	transform = glm::translate(transform, -m_eye);
 
 	m_at = transform * glm::vec4(m_at, 1.0f);
