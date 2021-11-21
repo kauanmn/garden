@@ -57,11 +57,8 @@ void OpenGLWindow::handleEvent(SDL_Event& ev) {
 }
 
 
-
-
-
 void OpenGLWindow::initializeGL() {
-	abcg::glClearColor(0,0,0,1);
+	abcg::glClearColor(0,0,0.2,1);
 
 	// enable depth buffering
 	abcg::glEnable(GL_DEPTH_TEST);
@@ -72,8 +69,9 @@ void OpenGLWindow::initializeGL() {
 	m_ground.initializeGL(m_program);
 
 
+
 	// load model
-	loadModelFromFile(getAssetsPath() + "arbusto.obj");
+	loadModelFromFile(getAssetsPath() + "arvore.obj");
 
 	// generate VBO
 	abcg::glGenBuffers(1, &m_VBO);
@@ -114,14 +112,14 @@ void OpenGLWindow::initializeGL() {
   	m_randomEngine.seed(seed);
 	std::uniform_int_distribution<int> intDistribution(1, 10);
 
-	for(int i = 0; i < bush.nObjects; i++){		
-		bush.positionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		bush.positionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
-		bush.colorRed[i] = float(intDistribution(m_randomEngine)) * 0.01f;
-		bush.colorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
-		bush.size[i] = float(intDistribution(m_randomEngine)) * 0.001f;
-		bush.positionXOut[i] = intDistribution(m_randomEngine) > 5;
-		bush.positionYOut[i] = intDistribution(m_randomEngine) > 5;
+	for(int i = 0; i < tree.nObjects; i++){		
+		tree.positionX[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		tree.positionY[i] = float(intDistribution(m_randomEngine)) * 1.0f;
+		tree.colorRed[i] = float(intDistribution(m_randomEngine)) * 0.08f;
+		tree.colorGreen[i] = float(intDistribution(m_randomEngine)) * 0.1f;
+		tree.size[i] = float(intDistribution(m_randomEngine)) * 0.05f;
+		tree.positionXOut[i] = intDistribution(m_randomEngine) > 5;
+		tree.positionYOut[i] = intDistribution(m_randomEngine) > 5;
 	}
 
 	resizeGL(getWindowSettings().width, getWindowSettings().height);
@@ -210,17 +208,17 @@ void OpenGLWindow::paintGL() {
 
 
 
-	for(int i = 0; i < bush.nObjects; i++){
+	for(int i = 0; i < tree.nObjects; i++){
 		glm::mat4 model{1.0f};
 		{
-			float positionX =  bush.positionXOut[i] ? -bush.positionX[i] : bush.positionX[i];
-			float positionY =  bush.positionYOut[i] ? -bush.positionY[i] : bush.positionY[i];
+			float positionX =  tree.positionXOut[i] ? -tree.positionX[i] : tree.positionX[i];
+			float positionY =  tree.positionYOut[i] ? -tree.positionY[i] : tree.positionY[i];
 			model = glm::translate(model, glm::vec3(positionX, 0.0f, positionY));
-			model = glm::rotate   (model, glm::radians(bush.positionY[i] * 9.0f), glm::vec3(0,1,0));
-			model = glm::scale    (model, glm::vec3(bush.size[i]));
+			model = glm::rotate   (model, glm::radians(tree.positionY[i] * 9.0f), glm::vec3(0,1,0));
+			model = glm::scale    (model, glm::vec3(tree.size[i]));
 
 			abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
-			abcg::glUniform4f(colorLoc, bush.colorRed[i], bush.colorGreen[i], 0.0f, 1.0f);
+			abcg::glUniform4f(colorLoc, tree.colorRed[i], tree.colorGreen[i], 0.0f, 1.0f);
 			abcg::glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, nullptr);
 		}	
 	}

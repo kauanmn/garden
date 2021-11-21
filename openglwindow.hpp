@@ -15,7 +15,7 @@ struct Vertex {
 
 class Objects3d {
 	public: 
-		static const int nObjects = 100;
+		static const int nObjects = 120;
 		bool positionXOut[nObjects];
 		bool positionYOut[nObjects];
 		float positionX[nObjects];
@@ -53,8 +53,7 @@ private:
 	float m_panSpeed  {0.0f};
 	float m_tiltSpeed {0.0f};
 
-	Objects3d bush;
-	Objects3d three_1;
+	Objects3d tree;
 
 	Ground m_ground;
 
