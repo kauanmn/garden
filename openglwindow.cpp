@@ -47,13 +47,14 @@ void OpenGLWindow::handleEvent(SDL_Event& ev) {
 		if (ev.key.keysym.sym == SDLK_a) m_truckSpeed = 0.0f;
 		if (ev.key.keysym.sym == SDLK_d) m_truckSpeed = 0.0f;
 	}
-	/*
+
 	if (ev.type == SDL_MOUSEMOTION) {
 		m_tiltSpeed = (static_cast<float>(ev.motion.yrel))*1.5f;
+		m_panSpeed = (static_cast<float>(ev.motion.xrel))*2.0f;
 		update();
 		m_tiltSpeed = 0.0f;
+		m_panSpeed = 0.0f;
 	}
-	*/
 }
 
 
