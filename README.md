@@ -93,19 +93,19 @@ for(int i = 0; i < tree.nObjects; i++){
 ### Terreno
 O terreno é um chão plano de cor sólida centralizado no plano xz. Suas características foram definidas em ```Ground::paintGL```
 ``` C++
-	for (const auto z : iter::range(-N, N+1)) {
-		for (const auto x : iter::range(-N, N+1)) {
-			// set model matrix
-			glm::mat4 model{1.0f};
-			model = glm::translate(model, glm::vec3(x, 0.0f, z));
-			abcg::glUniformMatrix4fv(m_modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
+for (const auto z : iter::range(-N, N+1)) {
+	for (const auto x : iter::range(-N, N+1)) {
+		// set model matrix
+		glm::mat4 model{1.0f};
+		model = glm::translate(model, glm::vec3(x, 0.0f, z));
+		abcg::glUniformMatrix4fv(m_modelMatrixLoc, 1, GL_FALSE, &model[0][0]);
 
-			// cor terreno
-			abcg::glUniform4f(m_colorLoc, 0.8f, 0.5f, 0.0f, 1.0f);
+		// cor terreno
+		abcg::glUniform4f(m_colorLoc, 0.8f, 0.5f, 0.0f, 1.0f);
 
-			abcg::glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		}
+		abcg::glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
+}
 ```
 
 <br>
@@ -120,7 +120,7 @@ if (ev.type == SDL_KEYDOWN) {
 	if (ev.key.keysym.sym == SDLK_LEFT)  m_panSpeed  = -1.0f;
 	if (ev.key.keysym.sym == SDLK_RIGHT) m_panSpeed  =  1.0f;
 
-  if (ev.key.keysym.sym == SDLK_w) m_dollySpeed =  1.0f;
+	if (ev.key.keysym.sym == SDLK_w) m_dollySpeed =  1.0f;
 	if (ev.key.keysym.sym == SDLK_s) m_dollySpeed = -1.0f;
 	if (ev.key.keysym.sym == SDLK_a) m_truckSpeed = -1.0f;
 	if (ev.key.keysym.sym == SDLK_d) m_truckSpeed =  1.0f;
